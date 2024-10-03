@@ -180,5 +180,8 @@ while True:
 			insert_chat_data(chat_id_pk,user_input,bot_response)
 			# reset time
 			# start_time = current_time
+		# no need to send entire context - since it's costly
+		if len(conversation_history)>1000: 
+			conversation_history = conversation_history[-3:]
 
 
