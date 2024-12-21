@@ -1,5 +1,5 @@
 
-# Chatbot Project
+# LLM ChatBot
 
 A simple chatbot application that interacts with the user and formats the response using HTML, CSS, JavaScript, and FastAPI for the backend. 
 The chatbot sends messages to a FastAPI backend that processes the input and provides a response, which is displayed in a formatted manner in the frontend.
