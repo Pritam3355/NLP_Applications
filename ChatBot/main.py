@@ -7,10 +7,8 @@ from fastapi.templating import Jinja2Templates
 from models import ChatRequest
 from chat_service import ChatService
 
-# FastAPI app initialization
 app = FastAPI()
 
-# CORS Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,7 +19,6 @@ app.add_middleware(
 # Templates for HTML responses
 templates = Jinja2Templates(directory="templates")
 
-# Chat Service Instance
 chat_service = ChatService()
 
 # Endpoint for serving frontend
