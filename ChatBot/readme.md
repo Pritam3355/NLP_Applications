@@ -52,6 +52,7 @@ DB_NAME="ChatDB"
 TOGETHER_API_KEY="YOUR_KEY"
 GROQ_API_KEY="YOUR_KEY"
 ```
+For crating tables use ```chatbot-db.sql```
 
 ### Folder Structure
 
