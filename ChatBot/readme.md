@@ -1,7 +1,7 @@
 
 # LLM ChatBot
 
-A simple single user chatbot application that interacts with the user and formats the response.
+A simple chatbot application that interacts with the user and formats the response.
 The chatbot sends messages to a FastAPI backend that processes the input and provides a response, which is displayed in a formatted manner in the frontend.
 
 ## Features
@@ -27,7 +27,7 @@ The chatbot sends messages to a FastAPI backend that processes the input and pro
 #### Install dependencies
 
    ```bash
-   pip3 install fastapi uvicorn mysql-connector-python
+   pip3 install fastapi uvicorn mysql-connector-python openai=0.28 runpod
    ```
 
 #### Run the FastAPI server
@@ -51,9 +51,23 @@ DB_HOST="localhost"
 DB_NAME="ChatDB"
 TOGETHER_API_KEY="YOUR_KEY"
 GROQ_API_KEY="YOUR_KEY"
-API_USE="Together"
+API_USE="RunPod"
+RUNPOD_API_KEY="YOUR_RUNPOD_ID"
+ENDPOINT_ID ="YOUR_ENDPOINT"
 ```
 For crating tables use ```chatbot-db.sql```
+
+You can set-up a RunPod Inference EndPoint & use that make sure to test it with ```runpod-test.py``` before using it to 
+
+Here is some of the settings for RunPod (it might look a bit overkill)
+```
+Network Volume - 30GB
+Worker Configaration - 48GB GPU (6 cores may be)
+Max Workers - 2 (single one can handle almost 20+ request)
+Query delay - 4 sec 
+Idle time - 120 sec (since you might experiment with the script)
+HF_HUB_ENABLE_HF_TRANSFER = 1 (explicitly set this in Environment Variable for faster downlaods)
+```
 
 ### Folder Structure
 
