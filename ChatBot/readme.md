@@ -1,7 +1,7 @@
 
 # LLM ChatBot
 
-A simple chatbot application that interacts with the user and formats the response using HTML, CSS, JavaScript, and FastAPI for the backend. 
+A simple single user chatbot application that interacts with the user and formats the response.
 The chatbot sends messages to a FastAPI backend that processes the input and provides a response, which is displayed in a formatted manner in the frontend.
 
 ## Features
@@ -51,6 +51,7 @@ DB_HOST="localhost"
 DB_NAME="ChatDB"
 TOGETHER_API_KEY="YOUR_KEY"
 GROQ_API_KEY="YOUR_KEY"
+API_USE="Together"
 ```
 For crating tables use ```chatbot-db.sql```
 
