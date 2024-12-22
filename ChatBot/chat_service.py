@@ -6,7 +6,7 @@ from datetime import datetime as dt
 class ChatService:
     def __init__(self):
         self.db_manager = DatabaseManager()
-        self.llm_service = LLMService(api_service="Groq")  # Alternate "Together"
+        self.llm_service = LLMService()  # Alternate "Together"
         self.conversation_history = []
         self.session_id = None
         self.u_id = None
@@ -20,30 +20,28 @@ class ChatService:
         self.session_id = str(self.u_id)+"$$"+time_stamp.strftime("%Y-%m-%d@%H:%M:%S") 
         self.db_manager.set_active_user(self.u_id)
         self.db_manager.insert_session_data(self.u_id,self.session_id,time_stamp, stream_id)
-        self.db_manager.insert_chat_data(self.u_id,self.session_id,user_input,bot_response)
+        self.db_manager.insert_chat_data(self.session_id,user_input,bot_response)
         return bot_response
 
     def continue_session(self, user_input):
         bot_response = self.llm_service.generate_response(self.conversation_history)
         self.conversation_history.append({"role": "assistant", "content": bot_response})
         time_stamp = dt.now()
-        # u_id = self.db_manager.get_active_user()
-        # session_id = self.db_manager.get_latest_session_id()
         stream_id = 0 # Ongoing session
         self.db_manager.insert_session_data(self.u_id,self.session_id,time_stamp, stream_id)  
-        self.db_manager.insert_chat_data(self.u_id,self.session_id,user_input,bot_response)
+        self.db_manager.insert_chat_data(self.session_id,user_input,bot_response)
         return bot_response
 
     def stop_session(self, user_input):
         bot_response = "Chat session ended!"
         self.conversation_history.append({"role": "assistant", "content": bot_response})
         time_stamp = dt.now()
-        # u_id = self.db_manager.get_active_user()
-        # session_id = self.db_manager.get_latest_session_id()
         stream_id = 2   # End of conversation
         self.db_manager.insert_session_data(self.u_id,self.session_id,time_stamp, stream_id) 
-        self.db_manager.insert_chat_data(self.u_id,self.session_id,user_input,bot_response)
+        self.db_manager.insert_chat_data(self.session_id,user_input,bot_response)
         self.db_manager.reset_active_user(self.u_id)
+        self.u_id = None
+        self.session_id = None
         return "Chat session ended!"
 
     def handle_chat(self, user_input,u_id):

@@ -1,5 +1,4 @@
 
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -21,7 +20,6 @@ app.add_middleware(
 # Templates for HTML responses
 templates = Jinja2Templates(directory="templates")
 
-# Chat Service Instance
 chat_service = ChatService()
 
 # Endpoint for serving frontend
@@ -30,7 +28,7 @@ async def get_chat_page(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 # Chat endpoint
-@app.post("/chat/")
+@app.post("/chat")
 async def chat_endpoint(chat_request: ChatRequest):
     user_input = chat_request.user_input
     u_id = chat_request.u_id
