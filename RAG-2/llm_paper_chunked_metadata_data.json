@@ -1,20 +1,164 @@
 {
-    "document_metadata": {
+  "document_metadata": {
         "filetype": "application/pdf",
         "document_length": "42",
         "file_directory": "/content",
         "filename": "llm_paper.pdf",
         "page_layout": {
-            "width": 1654,
-            "height": 2339,
-            "system": "PixelSpace"
+        "width": 1654,
+        "height": 2339,
+        "system": "PixelSpace"
         },
         "last_timestamp": [
-            "2025-07-31T13:28:15"
+        "2025-07-31T13:28:15"
         ],
         "language": [
-            "eng"
+        "eng"
         ]
+    },
+    "summary": {
+        "1_Introduction": {
+        "model": "Kwai Keye-VL",
+        "params": "8B",
+        "goal": "Short-form video understanding",
+        "challenge": "Static-image MLLMs fail on dynamic, information-dense video tasks",
+        "solution": {
+            "dataset": "600B+ token multimodal corpus (video-focused)",
+            "training_pipeline": "4-stage pre-training + 2-phase post-training",
+            "innovation": [
+            "Auto-think mode",
+            "Chain-of-thought reasoning",
+            "Reinforcement learning (RL)",
+            "KC-MMBench benchmark"
+            ]
+        },
+        "result": "SOTA on public video benchmarks, competitive on general vision-language tasks"
+        },
+        "2_Model_Architecture": {
+        "vision_encoder": "SigLIP ViT (native-resolution, 2D RoPE)",
+        "projector": "MLP (random initialized, trained in Stage 1)",
+        "language_decoder": "Qwen3-8B",
+        "features": [
+            "Preserves spatial and temporal fidelity",
+            "3D RoPE used for video time encoding"
+        ]
+        },
+        "2.1_Vision_Encoder_with_Native_Resolution": {
+        "method": "Interpolated + 2D RoPE on native-res images",
+        "benefits": [
+            "Avoids cropping/splitting",
+            "Retains structural integrity",
+            "Improved high-res modeling"
+        ],
+        "data": "500B tokens from LAION, DataComp, COCO, etc."
+        },
+        "3_Pre_Training": {
+        "data_pipeline": {
+            "token_count": "600B+",
+            "categories": [
+            "Image Caption",
+            "OCR & VQA",
+            "Grounding & Counting",
+            "Interleaved Text-Image",
+            "Video",
+            "Pure Text"
+            ],
+            "quality_control": "Filtering via CLIP and MLLM scoring, deduplication"
+        },
+        "training_stages": [
+            "Stage 0: Image-Text Matching (SigLIP loss)",
+            "Stage 1: Vision-Language Alignment (frozen models, train MLP)",
+            "Stage 2: Multi-task Pretraining (captioning, OCR, grounding, VQA)",
+            "Stage 3: Annealing + Model Merging (high-quality data, reduce bias)"
+        ]
+        },
+        "4_Post_Training": {
+        "Phase_I_No_Reasoning": {
+            "Step_I.1_SFT": {
+            "data": "70k tasks from TaskGalaxy, 200k QA, human-annotated captions",
+            "goal": "Improve instruction-following, basic visual tasks"
+            },
+            "Step_I.2_MPO": {
+            "data_sources": [
+                "400k open-source",
+                "10k RFT samples",
+                "90k text-only",
+                "30k human-labeled"
+            ],
+            "goal": "Stabilize and refine output in non-reasoning contexts"
+            }
+        },
+        "Phase_II_Reasoning": {
+            "Step_II.1_CoT_Cold_Start": {
+            "modes": [
+                "Thinking",
+                "Non-thinking",
+                "Auto-think",
+                "Agentic",
+                "Video"
+            ],
+            "techniques": [
+                "High-frequency CoT path selection",
+                "Step-wise correctness filtering",
+                "Image manipulation via code",
+                "Temporal modeling via shuffled frames"
+            ]
+            },
+            "Step_II.2_Mix_Mode_RL": {
+            "algo": "GRPO",
+            "rewards": [
+                "Outcome score",
+                "Consistency score"
+            ],
+            "goal": "Improve multimodal reasoning, video content understanding"
+            },
+            "Step_II.3_Iterative_Alignment": {
+            "strategy": "Rejection sampling + MPO",
+            "focus": [
+                "Reduce repetition",
+                "Improve logical consistency",
+                "Auto-select appropriate reasoning mode"
+            ]
+            }
+        }
+        },
+        "5_Training_Infrastructure": {
+        "parallelism": "Hybrid (Data + Sequence) with ZeRO optimization",
+        "load_balancing": "FLOP-based global rebalancing",
+        "fault_tolerance": "Sample-level auto-resume",
+        "sampling": "vLLM integration for fast reward modeling"
+        },
+        "6_Evaluation": {
+        "benchmarks": {
+            "general": ["MMMU", "AI2D", "BLINK", "HallusionBench"],
+            "math": ["MathVista", "DynaMath", "OlympiadBench"],
+            "ocr_doc": ["ChartQA", "OCRBench"],
+            "video": ["Video-MMMU", "TempCompass", "MMVU"],
+            "short_video": "KC-MMBench (open-sourced)"
+        },
+        "modes": {
+            "thinking": "Deep reasoning",
+            "auto_think": "Decide to reason or not"
+        },
+        "result": {
+            "general": "SOTA or near-SOTA in many tasks",
+            "short_video": "Keye-VL outperforms MiMo-VL by >10% on KC-MMBench"
+        }
+        },
+        "7_Discussion": {
+        "7.1_Mutual_Enhancement": "Reasoning and non-reasoning data improve each other",
+        "7.2_RL_Gain": "RL significantly boosts video reasoning and value alignment",
+        "7.3_Auto_Think": "Efficient reasoning decision-making; avoids overthinking"
+        },
+        "8_Conclusion_and_Future_Work": {
+        "summary": "Kwai Keye-VL is a strong MLLM for short-form video and general tasks",
+        "future_directions": [
+            "Fine-grained perception",
+            "Temporal reasoning",
+            "Agentic behavior",
+            "Open-ended video Q&A"
+        ]
+        }
     },
     "1": {
         "header": [],
